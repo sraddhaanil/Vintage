@@ -1,0 +1,39 @@
+.footer{
+    background-color:rgb(37, 37, 37);
+    color: white;
+    padding: 15px;
+}
+
+.footer #footer-heading{
+    text-align: center;
+    padding: 5px;
+}
+
+.footer .content{
+    display: flex;
+    justify-content: space-around;
+}
+
+.footer .content #social-icons{
+    padding: 3px;
+    margin: 3px;
+    color: white;
+}
+
+.footer .content #contact-icons{
+    padding: 3px;
+    margin: 3px;
+    color: white;
+}
+
+.footer .content .subscribe button{
+    display: block;
+    text-align: center;
+    border: none;
+    border-radius: 11px;
+    padding: 4px;
+    margin-top: 5px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
