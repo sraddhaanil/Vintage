@@ -11,6 +11,7 @@ import {
   faGooglePay,
   faCcVisa,
   faCcMastercard,
+  faAmazonPay
   
 
 } from "@fortawesome/free-brands-svg-icons";
@@ -39,7 +40,6 @@ function Footer() {
         <div>
         <div className="contact-heading">
         <p>Contact Us</p>
-        <FontAwesomeIcon icon={faGooglePay} />
       </div>
           <table>
             <tr>
@@ -60,6 +60,7 @@ function Footer() {
         <FontAwesomeIcon icon={faCcVisa} id="payment-icon"/>
         <FontAwesomeIcon icon={faCcMastercard} id="payment-icon" />
         <FontAwesomeIcon icon={faIndianRupeeSign} id="payment-icon"/>
+        <FontAwesomeIcon icon={faAmazonPay}  id="payment-icon"/>
         </div>
         <div className="subscribe">
           <p>Subscription form</p>

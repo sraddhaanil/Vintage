@@ -23,9 +23,10 @@ function Header() {
 
   return (
     <div className="header">
+    <div className="content">
       <nav className="navbar navbar-expand-lg navbar-dark  ">
         <div className="container-fluid d-flex justify-content-around">
-          <Link className="navbar-brand" to="/">
+          <Link className="navbar-brand nav-link active" to="/">
             <img src={logoImage} alt="Logo" className=" logo" />
           </Link>
           <button
@@ -41,7 +42,7 @@ function Header() {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/men">
+                <Link className="nav-link" aria-current="page" to="/men">
                   MEN
                 </Link>
               </li>
@@ -92,6 +93,7 @@ function Header() {
           </div>
         </div>
       </nav>
+    </div>
     </div>
   );
 }
