@@ -1,13 +1,9 @@
 .footer{
-    background-color:rgb(37, 37, 37);
+    background-color:#202020;
     color: white;
-    padding: 15px;
+    padding-top: 50px;
 }
 
-.footer #footer-heading{
-    text-align: center;
-    padding: 5px;
-}
 
 .footer .content{
     display: flex;
@@ -26,6 +22,12 @@
     color: white;
 }
 
+.footer .content #payment-icon{
+    padding: 3px;
+    margin: 3px;
+    color: white;
+}
+
 .footer .content .subscribe button{
     display: block;
     text-align: center;
@@ -37,3 +39,94 @@
     margin-left: auto;
 }
 
+.footer .content .text-box{
+    border-radius: 10px;
+}
+
+.logo-footer {
+    display: block;
+    margin: 0 auto;
+    width: 90px; 
+    height: auto; 
+    padding-bottom: 20px;
+  }
+  
+
+#contact-icons {
+    vertical-align: middle; 
+    margin-right: 5px; 
+  }
+
+  .contact-heading{
+    text-align: center;
+  }
+  
+  .email {
+    vertical-align: middle; 
+  }
+
+  
+.subscribe {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+  }
+  
+  .subscribe p {
+    margin-bottom: 10px; 
+  }
+  
+  .subscribe label {
+    display: inline-block;
+    margin-bottom: 5px; 
+  }
+  
+  .subscribe input {
+    width: 100%; 
+    padding: 8px; 
+    margin-bottom: 10px; 
+  }
+  
+
+ .subscribe button {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    background-color: #808080; 
+    color: #fff; 
+    padding: 8px 15px; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+}
+  
+  .subscribe button:hover {
+    background-color: #606060; 
+  }
+  
+  
+
+.download-button {
+   
+    background-color: #80808065; 
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px; 
+    border-radius: 10px; 
+    border: none;
+  }
+  
+  .download-button:hover {
+    background-color: #606060; 
+  }
+
+  
+.download-buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; 
+    margin-top: 20px;
+    padding-bottom: 25px; 
+}
+  
+  

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import logoImage from "../images/logo.png";
+import "../styles/Header.css"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
   faHeart,
   faBagShopping,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 
 function Header() {
@@ -19,11 +22,11 @@ function Header() {
   };
 
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark ">
+    <div className="header">
+      <nav className="navbar navbar-expand-lg navbar-dark  ">
         <div className="container-fluid d-flex justify-content-around">
           <Link className="navbar-brand" to="/">
-            Vintage
+            <img src={logoImage} alt="Logo" className=" logo" />
           </Link>
           <button
             className="navbar-toggler"
@@ -59,9 +62,10 @@ function Header() {
               </li>
             </ul>
 
-            <form className="d-flex ms-auto position-relative">
+            <form className="d-flex ms-auto search-container position-relative">
+              <FontAwesomeIcon icon={faSearch} className="search-icon" />
               <input
-                className="form-control me-2 pl-4"
+                className="form-control me-2 pl-4 search-input"
                 type="search"
                 placeholder="Search for products, brands and more"
                 aria-label="Search"
@@ -70,7 +74,7 @@ function Header() {
                 style={{ width: "400px" }}
               />
             </form>
-
+<div className="icons-container">
             <FontAwesomeIcon
               icon={faUser}
               style={{ color: "white", marginLeft: "10px", cursor: "pointer" }}
@@ -84,6 +88,7 @@ function Header() {
               icon={faBagShopping}
               style={{ color: "white", marginLeft: "10px", cursor: "pointer" }}
             />
+            </div>
           </div>
         </div>
       </nav>
