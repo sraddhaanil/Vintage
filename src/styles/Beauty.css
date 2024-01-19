@@ -3,16 +3,18 @@
 .beauty-content {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: space-between ;
+    gap: 5px;
   }
   
   .card {
     margin: 50px;
-    max-width: 300px;}
+    max-width: 200px;}
   
   .card img {
     max-width: 80%;
     height: auto;
+    margin: 30px;
   }
   
   
