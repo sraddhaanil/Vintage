@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import Layout from '../components/Layout';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import "../styles/Beauty.css"
+import Layout from "../components/Layout";
 
 const api = axios.create({
-  baseURL: 'https://vintage-backend.onrender.com/api',
+  baseURL: "https://vintage-backend.onrender.com/api",
 });
 
 const Beauty = () => {
@@ -12,8 +13,10 @@ const Beauty = () => {
 
   async function getProducts() {
     try {
-      const response = await api.get("/products/get-category-products?category=beauty");
-      const data = await response.data.products;
+      const response = await api.get(
+        "/products/get-category-products?category=beauty"
+      );
+      const data = await response.data;
       setProducts(data.slice(0, 20));
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -25,21 +28,21 @@ const Beauty = () => {
   }, []);
 
   return (
-    <Layout>
-      <div className='row row-cols-4 gap-2 justify-content-center'>
+    <Layout className="beauty">
+    <div className="beauty-content row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center">
         {products.map((product) => (
-          <div className="col card" key={product.id}>
+          <div className="col card col-md-4 col-lg-3" key={product.id}>
             <img
-              src={product.thumbnail}
+              src={product.image}
               className="card-img-top"
-              style={{ height: "150px" }}
+              // style={{ height: "200px", width:"150px" }}
               alt="..."
             />
             <div className="card-body">
               <h5 className="card-title">{product.title}</h5>
               <p className="card-text fw-bold">${product.price}</p>
               <p className="card-text text-truncate">{product.description}</p>
-              <Link to="/beauty" className="btn btn-primary">
+              <Link to="/beauty" className="btn btn-dark btn-lg">
                 Add to Cart
               </Link>
             </div>

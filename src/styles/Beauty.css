@@ -1,0 +1,18 @@
+
+
+.beauty-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+  
+  .card {
+    margin: 50px;
+    max-width: 300px;}
+  
+  .card img {
+    max-width: 80%;
+    height: auto;
+  }
+  
+  
