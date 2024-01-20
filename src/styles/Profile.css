@@ -1,0 +1,66 @@
+
+.profile-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(60, 60, 60, 0.1);
+    margin-top: 4%;
+    margin-bottom: 4%;
+    
+  }
+  
+  .profile-container h1 {
+    text-align: center;
+    color: #fff; 
+    background-color: #202020; 
+    padding: 10px; 
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 20px; 
+  }
+  
+  .toggle-link {
+    text-align: center;
+    cursor: pointer;
+    color: #535353;
+  }
+  
+  .login-form,
+  .signup-form {
+    margin-top: 20px;
+  }
+  
+  form label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+    border-radius: 3px;
+  }
+  
+  form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #202020;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  form button:hover {
+    background-color: #414040;
+  }
+  
+  
+  .profile-container.signup .login-form,
+  .profile-container.login .signup-form {
+    display: none;
+  }
+  
