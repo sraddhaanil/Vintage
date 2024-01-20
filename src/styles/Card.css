@@ -1,0 +1,44 @@
+
+
+.beauty-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between ;
+    gap: 2px;
+  }
+  
+  .card {
+    margin: 50px;
+    max-width: 200px;
+    position: relative;
+    padding-bottom: 20px;
+  }
+  
+  .card img {
+    max-width: 80%;
+    height: auto;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+
+.card-body {
+  background-color: #f8f9fa; 
+  padding: 15px; 
+  border-radius: 8px; 
+}
+
+.card-body h5 {
+  color: #343a40; 
+}
+
+.card-body p {
+  color: #6c757d; 
+}
+
+.card-body .btn {
+  background-color: #343a40; 
+  color: #fff; 
+}
+
+

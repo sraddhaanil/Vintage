@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "../styles/Beauty.css"
+import "../styles/Card.css"
 import Layout from "../components/Layout";
 
 const api = axios.create({
@@ -42,11 +42,14 @@ const Beauty = () => {
               <h5 className="card-title">{product.title}</h5>
               <p className="card-text fw-bold">${product.price}</p>
               <p className="card-text text-truncate">{product.description}</p>
+              </div>
+              <div className="button-container text-center"style={{ paddingTop: "15px" }}>
               <Link to="/beauty" className="btn btn-dark btn-lg">
                 Add to Cart
               </Link>
-            </div>
           </div>
+            </div>
+          
         ))}
       </div>
     </Layout>
