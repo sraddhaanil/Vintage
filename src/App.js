@@ -1,12 +1,12 @@
 import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter, Route, Routes} from "react-router-dom";
-import Beauty from "./pages/Beauty";
-import Men from"./pages/Men";
+import Menclothing from"./pages/Menclothing";
 import Home from "./pages/Home";
-import Women from "./pages/Women";
-import Kids from "./pages/Kids";
 import Profile from "./pages/Profile";
+import Womenclothing from "./pages/Womenclothing";
+import Kidsclothing from "./pages/Kidsclothing";
+import Makeup from "./pages/Makeup";
 function App() {
   return (
     <div>
@@ -14,12 +14,12 @@ function App() {
       
         <Routes>
         <Route path="/" element={<Home/>}/>
-        <Route path="/men" element={<Men/>}/>
-        <Route path="/women" element={<Women/>}/>
-        <Route path="/Kids" element={<Kids/>}/>
-        <Route path="/beauty" element={<Beauty/>}/>
+        <Route path="/men/clothing" element={<Menclothing/>}/>
+        <Route path="/women/clothing" element={<Womenclothing/>}/>
+        <Route path="/Kids/clothing" element={<Kidsclothing/>}/>
+        <Route path="/beauty/makeup" element={<Makeup/>}/>
         <Route path="/profile" element={<Profile/>}/>
-        
+
         </Routes>
       </BrowserRouter>
     </div>
