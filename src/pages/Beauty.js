@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 import "../styles/Card.css";
 import Layout from "../components/Layout";
 
@@ -13,6 +13,8 @@ const api = axios.create({
 const Beauty = () => {
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  const navigate = useNavigate();
 
   async function getProducts() {
     try {
@@ -26,31 +28,58 @@ const Beauty = () => {
     }
   }
 
+  const fetchCartData = async () => {
+    try {
+      const response = await api.get("/cart/get-cart");
+      const data = await response.data;
+      setCartItems(data.cart_items);
+    } catch (error) {
+      console.error("Error fetching cart data:", error);
+    }
+  };
+
   useEffect(() => {
     getProducts();
+    fetchCartData();
   }, []);
 
   useEffect(() => {
-    // Load wishlist from local storage
     const storedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
     setWishlist(storedWishlist);
   }, []);
 
+  const isItemInCart = (productId) => {
+    return cartItems.some((item) => item.product_id === productId);
+  };
+
+  const addToCart = async (productId) => {
+    try {
+      const response = await api.post('/cart/add-to-cart', {
+        product_id: productId,
+      });
+
+      if (response.data.success) {
+        console.log('Item added to the cart');
+        fetchCartData(); // Refresh cart data
+      } else {
+        console.error('Failed to add item to the cart');
+      }
+    } catch (error) {
+      console.error('Error adding item to the cart:', error);
+    }
+  };
+
   const addToWishlist = (productId) => {
-    // Check if the product is already in the wishlist
     if (!wishlist.includes(productId)) {
-      // Add product to the wishlist
       const updatedWishlist = [...wishlist, productId];
       setWishlist(updatedWishlist);
-
-      // Update local storage
       localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
     }
   };
 
   return (
     <Layout className="beauty">
-      <div className="beauty-content row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center">
+      <div className="card-content row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center">
         {products.map((product) => (
           <div className="col card col-md-4 col-lg-3" key={product.id}>
             <img src={product.image} className="card-img-top" alt="..." />
@@ -60,9 +89,21 @@ const Beauty = () => {
               <p className="card-text text-truncate">{product.description}</p>
             </div>
             <div className="button-container text-center" style={{ paddingTop: "15px" }}>
-              <Link to="/addtocart" className="btn btn-dark btn-lg">
-                Add to Cart
-              </Link>
+              {isItemInCart(product.id) ? (
+                <button
+                  className="btn btn-dark btn-lg"
+                  onClick={() => navigate("/cart")}
+                >
+                  Go to Cart
+                </button>
+              ) : (
+                <button
+                  className="btn btn-dark btn-lg"
+                  onClick={() => addToCart(product.id)}
+                >
+                  Add to Cart
+                </button>
+              )}
               <button
                 className="btn btn-outline-dark btn-lg"
                 style={{ marginLeft: "10px" }}

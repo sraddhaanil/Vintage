@@ -1,38 +1,45 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import Layout from '../components/Layout';
+import axios from 'axios';
 
 const api = axios.create({
-  baseURL: "https://vintage-backend.onrender.com/api",
+  baseURL: 'https://vintage-backend.onrender.com/api',
 });
 
-const AddToCartButton = ({ productId }) => {
-  const [isAddingToCart, setIsAddingToCart] = useState(false);
+function AddtoCart() {
+  const [cartItems, setCartItems] = useState([]);
 
-  const addToCart = async () => {
-    try {
-      setIsAddingToCart(true);
+  useEffect(() => {
+    // Fetch cart data
+    const fetchCartData = async () => {
+      try {
+        const response = await api.get('/cart/get-cart');
+        const data = await response.data;
+        setCartItems(data); // Assuming the API response contains cart items
+      } catch (error) {
+        console.error('Error fetching cart data:', error);
+      }
+    };
 
-      const response = await api.post("/cart/add-to-cart", {
-        product_id: productId,
-      });
-
-      console.log("Item added to cart:", response.data);
-
-      // Handle additional logic if needed (e.g., show a success message)
-    } catch (error) {
-      console.error("Error adding item to cart:", error);
-
-      // Handle errors (e.g., show an error message)
-    } finally {
-      setIsAddingToCart(false);
-    }
-  };
+    fetchCartData();
+  }, []);
 
   return (
-    <button onClick={addToCart} disabled={isAddingToCart}>
-      {isAddingToCart ? "Adding to Cart..." : "Add to Cart"}
-    </button>
+    <Layout>
+      <div>
+        <h2>Your Cart</h2>
+        {cartItems.map((item) => (
+          <div key={item.id}>
+            <p>{item.productName}</p>
+            <p>Quantity: {item.quantity}</p>
+            <p>Price: ${item.price}</p>
+            {/* Add more details if needed */}
+          </div>
+        ))}
+      </div>
+    </Layout>
   );
-};
+}
 
-export default AddToCartButton;
+export default AddtoCart;
+

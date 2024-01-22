@@ -8,6 +8,8 @@ import Women from "./pages/Women";
 import Kids from "./pages/Kids";
 import Beauty from "./pages/Beauty";
 import Wishlist from "./pages/Wishlist";
+import AddtoCart from "./pages/Addtocart";
+
 function App() {
   return (
     <div>
@@ -21,6 +23,7 @@ function App() {
         <Route path="/beauty" element={<Beauty/>}/>
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/wishlist" element={<Wishlist/>}/>
+        <Route path="/cart" element={<AddtoCart/>}/>
         </Routes>
       </BrowserRouter>
     </div>

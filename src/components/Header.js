@@ -90,7 +90,7 @@ function Header() {
                   />
                 </Link>
 
-                <Link to="/shopping-bag">
+                <Link to="/cart">
                   <FontAwesomeIcon
                     icon={faShoppingBag}
                     style={{ color: "white", marginLeft: "10px", cursor: "pointer" }}
