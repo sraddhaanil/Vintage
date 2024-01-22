@@ -7,6 +7,7 @@ import Profile from "./pages/Profile";
 import Women from "./pages/Women";
 import Kids from "./pages/Kids";
 import Beauty from "./pages/Beauty";
+import Wishlist from "./pages/Wishlist";
 function App() {
   return (
     <div>
@@ -19,7 +20,7 @@ function App() {
         <Route path="/Kids" element={<Kids/>}/>
         <Route path="/beauty" element={<Beauty/>}/>
         <Route path="/profile" element={<Profile/>}/>
-
+        <Route path="/wishlist" element={<Wishlist/>}/>
         </Routes>
       </BrowserRouter>
     </div>

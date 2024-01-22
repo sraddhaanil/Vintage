@@ -83,7 +83,7 @@ function Header() {
                   />
                 </Link>
 
-                <Link to="/favorites">
+                <Link to="/wishlist">
                   <FontAwesomeIcon
                     icon={faHeart}
                     style={{ color: "white", marginLeft: "10px", cursor: "pointer" }}
