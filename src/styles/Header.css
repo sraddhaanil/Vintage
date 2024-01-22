@@ -1,101 +1,51 @@
-/* Header */
+/* Header.css */
+
 .header {
-  background-color: #202020; /* Adjust the background color as needed */
+  background-color: #202020;
   color: white;
   padding: 10px 0;
 }
 
-/* Navbar Brand */
-.navbar-brand {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: white;
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .logo {
-  max-width: 40px; /* Adjust the logo size as needed */
-  margin-right: 10px;
+  max-height: 40px;
 }
 
-/* Navbar Links */
-.navbar-nav {
-  display: flex;
-  align-items: center;
-}
-
-.nav-item {
-  margin-right: 15px;
+.navbar {
+  padding: 0;
 }
 
 .nav-link {
-  text-decoration: none;
   color: white;
+  font-weight: bold;
 }
 
-/* Dropdown Styles */
-.dropdown {
-  position: relative;
+.nav-link:hover {
+  color: #827f79; /* Yellow color, change as needed */
 }
 
-.dropdown:hover .dropdown-menu {
-  display: block;
-}
-
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  background-color: #fff; 
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-.dropdown-item {
-  color: white;
-  padding: 10px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-item:hover {
-  background-color: #202020; /* Adjust the hover background color as needed */
-}
-
-.dropdown-toggle::after {
-  border-top-color: #202020 !important; /* Add !important to override Bootstrap's styles */
-}
-  
-.dropdown-item a {
-  color:#202020 !important; /* Add !important to override Bootstrap's styles */
-  text-decoration: none;
-}
-
-/* Change the color on hover if needed */
-.dropdown-item a:hover {
-  color: white !important; /* Add !important to override Bootstrap's styles */
-}
-
-  
-
-/* Search Container */
 .search-container {
   position: relative;
 }
 
 .search-icon {
   position: absolute;
-  left: 10px;
-  top: 50%;
+  top: 40%;
   transform: translateY(-50%);
-  color: white;
+  left: 10px;
+  color: #807e7e;
+  margin-right: 5px;
 }
 
 .search-input {
   width: 100%;
-  padding-left: 35px; /* Adjust the padding as needed */
+  padding-left: 40px;
 }
 
-/* Icons Container */
 .icons-container {
   display: flex;
   align-items: center;
@@ -103,39 +53,27 @@
 
 .icons-container a {
   margin-left: 10px;
-  color: white;
-  text-decoration: none;
 }
 
-/* Responsive Navbar Toggler */
-.navbar-toggler {
-  border: none;
-  cursor: pointer;
-  background-color: transparent;
-  outline: none;
-}
-
-.navbar-toggler-icon {
-  color: #fff;
-}
-
-
-/* Media Query for Small Screens */
-@media (max-width: 768px) {
-  .navbar-nav {
-    flex-direction: column;
-    align-items: flex-start;
+/* Responsive styles using Bootstrap classes */
+@media (max-width: 767px) {
+  .navbar-toggler {
+    margin-top: 10px;
   }
 
-  .nav-item {
-    margin-right: 0;
-    margin-bottom: 10px;
+  .navbar-collapse {
+    margin-top: 10px;
+  }
+
+  .search-container {
+    margin-top: 10px;
   }
 
   .icons-container {
     margin-top: 10px;
   }
 }
+
 
   
 

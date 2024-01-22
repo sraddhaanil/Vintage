@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Layout from "../components/Layout";
 import "../styles/Card.css"
-
-
+import Layout from "../components/Layout";
 
 const api = axios.create({
   baseURL: "https://vintage-backend.onrender.com/api",
 });
 
-const Kidsclothing = () => {
+const Beauty = () => {
   const [products, setProducts] = useState([]);
 
   async function getProducts() {
     try {
       const response = await api.get(
-        "/products/get-category-products?category=kids"
+        "/products/get-category-products?category=beauty"
       );
       const data = await response.data;
       setProducts(data.slice(0, 20));
@@ -46,7 +44,7 @@ const Kidsclothing = () => {
               <p className="card-text text-truncate">{product.description}</p>
               </div>
               <div className="button-container text-center"style={{ paddingTop: "15px" }}>
-              <Link to="/addtocart" className="btn btn-dark btn-lg">
+              <Link to="/addtocart" className="btn btn-dark btn-lg ">
                 Add to Cart
               </Link>
           </div>
@@ -58,4 +56,4 @@ const Kidsclothing = () => {
   );
 };
 
-export default Kidsclothing;
+export default Beauty;

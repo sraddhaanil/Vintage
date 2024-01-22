@@ -41,85 +41,25 @@ function Header() {
             </button>
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav">
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link dropdown-toggle"
-                    id="navbarDropdownMen"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
+                <li className="nav-item">
+                  <Link to="/men" className="nav-link">
                     MEN
                   </Link>
-                  <ul className="dropdown-menu" aria-labelledby="navbarDropdownMen">
-                    <li className="dropdown-item">
-                      <Link to="/men/clothing">Clothing</Link>
-                    </li>
-                    <li className="dropdown-item">
-                      <Link to="/men/accessories">Accessories</Link>
-                    </li>
-                  </ul>
                 </li>
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link dropdown-toggle"
-                    id="navbarDropdownWomen"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
+                <li className="nav-item">
+                  <Link to="/women" className="nav-link">
                     WOMEN
                   </Link>
-                  <ul className="dropdown-menu" aria-labelledby="navbarDropdownWomen">
-                    <li className="dropdown-item">
-                      <Link to="/women/clothing">Clothing</Link>
-                    </li>
-                    <li className="dropdown-item">
-                      <Link to="/women/accessories">Accessories</Link>
-                    </li>
-                  </ul>
                 </li>
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link dropdown-toggle"
-                    id="navbarDropdownKids"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
+                <li className="nav-item">
+                  <Link to="/kids" className="nav-link">
                     KIDS
                   </Link>
-                  <ul className="dropdown-menu" aria-labelledby="navbarDropdownKids">
-                    <li className="dropdown-item">
-                      <Link to="/kids/clothing">Clothing</Link>
-                    </li>
-                    <li className="dropdown-item">
-                      <Link to="/kids/toys">Toys</Link>
-                    </li>
-                  </ul>
                 </li>
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link dropdown-toggle"
-                    id="navbarDropdownBeauty"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
+                <li className="nav-item">
+                  <Link to="/beauty" className="nav-link">
                     BEAUTY
                   </Link>
-                  <ul className="dropdown-menu" aria-labelledby="navbarDropdownBeauty">
-                    <li className="dropdown-item">
-                      <Link to="/beauty/skincare">Skincare</Link>
-                    </li>
-                    <li className="dropdown-item">
-                      <Link to="/beauty/makeup">Makeup</Link>
-                    </li>
-                  </ul>
                 </li>
               </ul>
 
@@ -166,4 +106,3 @@ function Header() {
 }
 
 export default Header;
-
