@@ -1,34 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import axios from 'axios';
+import Wishlist from './Wishlist';
 
 const api = axios.create({
   baseURL: 'https://vintage-backend.onrender.com/api',
 });
 
-function Wishlist() {
-  const [wishlist, setWishlist] = useState([]);
+function AddtoCart() {
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    // Fetch wishlist data
-    const fetchWishlistData = async () => {
+    // Fetch cart data
+    const fetchCartData = async () => {
       try {
-        const response = await api.get('/wishlist/get-wishlist-items');
+        const response = await api.get('/cart/get-cart-items');
         const data = await response.data;
-        setWishlist(data); // Assuming the API response contains wishlist items
+        setCartItems(data); // Assuming the API response contains cart items
       } catch (error) {
-        console.error('Error fetching wishlist data:', error);
+        console.error('Error fetching cart data:', error);
       }
     };
 
-    fetchWishlistData();
+    fetchCartData();
   }, []);
 
   return (
     <Layout>
       <div>
         <h2>Your Cart</h2>
-        {wishlist.map((item) => (
+        {cartItems.map((item) => (
           <div key={item.id}>
             <img src={item.imageUrl} alt={item.productName} style={{ maxWidth: '100px', maxHeight: '100px' }} />
             <p>{item.productName}</p>
@@ -43,4 +44,3 @@ function Wishlist() {
 }
 
 export default Wishlist;
-

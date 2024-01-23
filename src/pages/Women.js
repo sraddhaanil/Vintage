@@ -12,8 +12,8 @@ const api = axios.create({
 
 const Women = () => {
   const [products, setProducts] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [, setWishlist] = useState([]);
   const navigate = useNavigate();
 
   async function getProducts() {
@@ -38,14 +38,20 @@ const Women = () => {
     }
   };
 
+  const fetchWishlistData = async () => {
+    try {
+      const response = await api.get("/wishlist/get-wishlist");
+      const data = await response.data;
+      setWishlist(data.wishlist_items);
+    } catch (error) {
+      console.error("Error fetching wishlist data:", error);
+    }
+  };
+
   useEffect(() => {
     getProducts();
     fetchCartData();
-  }, []);
-
-  useEffect(() => {
-    const storedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    setWishlist(storedWishlist);
+    fetchWishlistData();
   }, []);
 
   const isItemInCart = (productId) => {
@@ -54,32 +60,42 @@ const Women = () => {
 
   const addToCart = async (productId) => {
     try {
-      const response = await api.post('/cart/add-to-cart', {
+      const response = await api.post("/cart/add-to-cart", {
         product_id: productId,
       });
 
       if (response.data.success) {
-        console.log('Item added to the cart');
+        console.log("Item added to the cart");
         fetchCartData(); // Refresh cart data
       } else {
-        console.error('Failed to add item to the cart');
+        console.error("Failed to add item to the cart");
       }
     } catch (error) {
-      console.error('Error adding item to the cart:', error);
+      console.error("Error adding item to the cart:", error);
     }
   };
 
-  const addToWishlist = (productId) => {
-    if (!wishlist.includes(productId)) {
-      const updatedWishlist = [...wishlist, productId];
-      setWishlist(updatedWishlist);
-      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+  
+  const addToWishlist = async (productId) => {
+    try {
+      const response = await api.post("/wishlist/add-to-wishlist", {
+        product_id: productId,
+      });
+
+      if (response.data.success) {
+        console.log("Item added to the wishlist");
+        fetchWishlistData(); // Refresh wishlist data
+      } else {
+        console.error("Failed to add item to the wishlist");
+      }
+    } catch (error) {
+      console.error("Error adding item to the wishlist:", error);
     }
   };
 
   return (
     <Layout className="women">
-      <div className="women-content row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center">
+      <div className="card-content row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center">
         {products.map((product) => (
           <div className="col card col-md-4 col-lg-3" key={product.id}>
             <img src={product.image} className="card-img-top" alt="..." />
@@ -88,7 +104,10 @@ const Women = () => {
               <p className="card-text fw-bold">${product.price}</p>
               <p className="card-text text-truncate">{product.description}</p>
             </div>
-            <div className="button-container text-center" style={{ paddingTop: "15px" }}>
+            <div
+              className="button-container text-center"
+              style={{ paddingTop: "15px" }}
+            >
               {isItemInCart(product.id) ? (
                 <button
                   className="btn btn-dark btn-lg"
@@ -108,9 +127,10 @@ const Women = () => {
                 className="btn btn-outline-dark btn-lg"
                 style={{ marginLeft: "10px" }}
                 onClick={() => addToWishlist(product.id)}
-              >
-                <FontAwesomeIcon icon={faHeart} />
-              </button>
+>
+  <FontAwesomeIcon icon={faHeart} />
+</button>
+
             </div>
           </div>
         ))}
@@ -120,3 +140,5 @@ const Women = () => {
 };
 
 export default Women;
+
+             

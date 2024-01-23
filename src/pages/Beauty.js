@@ -75,7 +75,24 @@ const Beauty = () => {
     }
   };
 
-  
+  const updateQuantity = async (productId, quantity) => {
+    try {
+      const response = await api.put("/cart/update-quantity", {
+        product_id: productId,
+        quantity: quantity,
+      });
+
+      if (response.data.success) {
+        console.log("Quantity updated successfully");
+        fetchCartData(); // Refresh cart data
+      } else {
+        console.error("Failed to update quantity");
+      }
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+    }
+  };
+
   const addToWishlist = async (productId) => {
     try {
       const response = await api.post("/wishlist/add-to-wishlist", {
@@ -109,12 +126,26 @@ const Beauty = () => {
               style={{ paddingTop: "15px" }}
             >
               {isItemInCart(product.id) ? (
-                <button
-                  className="btn btn-dark btn-lg"
-                  onClick={() => navigate("/cart")}
-                >
-                  Go to Cart
-                </button>
+                <>
+                  <button
+                    className="btn btn-dark btn-lg"
+                    onClick={() => navigate("/cart")}
+                  >
+                    Go to Cart
+                  </button>
+                  <input
+                    type="number"
+                    min="1"
+                    defaultValue="1"
+                    style={{ marginLeft: "10px", width: "60px" }}
+                    onChange={(e) => {
+                      const newQuantity = parseInt(e.target.value, 10);
+                      if (!isNaN(newQuantity)) {
+                        updateQuantity(product.id, newQuantity);
+                      }
+                    }}
+                  />
+                </>
               ) : (
                 <button
                   className="btn btn-dark btn-lg"
@@ -127,10 +158,9 @@ const Beauty = () => {
                 className="btn btn-outline-dark btn-lg"
                 style={{ marginLeft: "10px" }}
                 onClick={() => addToWishlist(product.id)}
->
-  <FontAwesomeIcon icon={faHeart} />
-</button>
-
+              >
+                <FontAwesomeIcon icon={faHeart} />
+              </button>
             </div>
           </div>
         ))}

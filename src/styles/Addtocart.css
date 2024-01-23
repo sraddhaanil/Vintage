@@ -1,0 +1,44 @@
+/* Addtocart.css */
+
+.addtocart {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .cart-items {
+    border: 1px solid #747474;
+    margin-bottom: 10px;
+    padding: 10px;
+    display: block;
+    align-items: center;
+  }
+  
+  .cart-img {
+    margin-right: 20px;
+  }
+  
+  .cart-quality {
+    display: flex;
+    align-items: center;
+  }
+  
+  .cart-btn {
+    background-color: #202020;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .cart-btn:hover {
+    background-color: #404040;
+  }
+  
+  h2 {
+    color: #333;
+  }
+  
+  /* Add any other styles you need */
+  
+  
