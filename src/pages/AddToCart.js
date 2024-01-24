@@ -115,7 +115,7 @@ function AddtoCart() {
               className="cart-img"
             />
             <p>{item.title}</p>
-            <p>Price: ${item.price * item.quantity}</p>
+            <p>Price: ₹{item.price * item.quantity}</p>
 
             {/* Quantity update section */}
             <div
@@ -169,7 +169,7 @@ function AddtoCart() {
         ))}
         
         {/* Total Price */}
-        <p className="total-price">Total Price: ${totalPrice}</p>
+        <p className="total-price">Total Price: ₹{totalPrice}</p>
 
         {/* Buy Now button */}
         <button onClick={handleBuyNow} className="buy-now-btn">
