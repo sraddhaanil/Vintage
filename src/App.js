@@ -8,7 +8,7 @@ import Women from "./pages/Women";
 import Kids from "./pages/Kids";
 import Beauty from "./pages/Beauty";
 import Wishlist from "./pages/Wishlist";
-import Addtocart from "./pages/Addtocart";
+import Addtocart from "./pages/AddToCart";
 
 function App() {
   return (

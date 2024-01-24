@@ -9,7 +9,6 @@ const api = axios.create({
 
 function AddtoCart() {
   const [cartItems, setCartItems] = useState([]);
-  const [quantityToUpdate, setQuantityToUpdate] = useState({});
 
   const fetchCartData = async () => {
     try {
@@ -20,22 +19,23 @@ function AddtoCart() {
       console.error('Error fetching cart data:', error);
     }
   };
+  
 
   useEffect(() => {
     // Fetch cart data on component mount
     fetchCartData();
   }, []);
 
-  const updateQuantity = async (productId) => {
+  const updateQuantity = async (productId,itemQuantity) => {
     try {
       const response = await api.put("/cart/update-quantity", {
         product_id: productId,
-        quantity: quantityToUpdate[productId],
+        quantity: itemQuantity,
       });
 
-      if (response.data.success) {
+      if (response.status === 200) {
         console.log("Quantity updated successfully");
-        fetchCartData(); // Refresh cart data
+        await fetchCartData(); // Refresh cart data
       } else {
         console.error("Failed to update quantity");
       }
@@ -44,21 +44,6 @@ function AddtoCart() {
     }
   };
 
-  const handleIncrement = (productId) => {
-    setQuantityToUpdate((prevQuantity) => ({
-      ...prevQuantity,
-      [productId]: (prevQuantity[productId] || 0) + 1,
-    }));
-    updateQuantity(productId);
-  };
-
-  const handleDecrement = (productId) => {
-    setQuantityToUpdate((prevQuantity) => ({
-      ...prevQuantity,
-      [productId]: Math.max((prevQuantity[productId] || 0) - 1, 0),
-    }));
-    updateQuantity(productId);
-  };
 
   return (
     <Layout>
@@ -66,15 +51,23 @@ function AddtoCart() {
         <h2>Your Cart</h2>
         {cartItems.map((item) => (
           <div key={item.id} className='cart-items'>
-            <img src={item.imageUrl} alt={item.productName} style={{ maxWidth: '100px', maxHeight: '100px' }}  className='cart-img'/>
-            <p>{item.productName}</p>
+            <img src={item.image} alt={item.title} style={{ maxWidth: '100px', maxHeight: '100px' }}  className='cart-img'/>
+            <p>{item.title}</p>
             <p>Price: ${item.price}</p>
 
             {/* Quantity update section */}
             <div style={{ display: 'flex', alignItems: 'center' }} className='cart-quality'>
-              <button onClick={() => handleDecrement(item.id)} className='cart-btn'>-</button>
-              <p style={{ margin: '0 10px' }}>{quantityToUpdate[item.id] || item.quantity}</p>
-              <button onClick={() => handleIncrement(item.id)} className='cart-btn'>+</button>
+              <button onClick={() => {
+                updateQuantity(item["_id"],item.quantity-1)
+                
+
+                }} className='cart-btn'>-</button>
+              <p style={{ margin: '0 10px' }}>{item.quantity}</p>
+              <button onClick={() => {
+                updateQuantity(item["_id"],item.quantity+1)
+                
+
+                }} className='cart-btn'>+</button>
             </div>
           </div>
         ))}
