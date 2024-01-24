@@ -4,7 +4,7 @@ import Layout from '../components/Layout';
 import menImage from '../images/men.jpg';
 import womenImage from '../images/women.jpg';
 import kidImage from '../images/kids.jpg';
-import beautyImage from '../images/beauty.jpeg';
+import beautyImage from '../images/beauty.jpg';
 
 function Home() {
   return (
