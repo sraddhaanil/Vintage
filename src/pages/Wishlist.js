@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import axios from 'axios';
+import "../styles/Wishlist.css";
 
 const api = axios.create({
   baseURL: 'https://vintage-backend.onrender.com/api',
@@ -45,20 +46,18 @@ function Wishlist() {
 
   return (
     <Layout>
-      <div>
+      <div className="addtowishlist">
         <h2>Your Wishlist</h2>
         {wishlist.map((item) => (
-          <div key={item.id}>
+          <div key={item.id} className="wish-list-items">
             <img
-              src={item.imageUrl}
-              alt={item.productName}
+              src={item.image}
+              alt={item.title}
               style={{ maxWidth: '100px', maxHeight: '100px' }}
             />
-            <p>{item.productName}</p>
-            <p>Quantity: {item.quantity}</p>
-            <p>Price: ${item.price}</p>
+            <p>{item.title}</p>
             {/* Add more details if needed */}
-            <button onClick={() => deleteFromWishlist(item.productId)}>
+            <button  className="wish-list-btn" onClick={() => deleteFromWishlist(item["_id"])}>
               Remove from Wishlist
             </button>
           </div>
