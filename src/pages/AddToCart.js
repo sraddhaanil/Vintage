@@ -64,6 +64,44 @@ function AddtoCart() {
     }
   };
 
+  const handleBuyNow = async () => {
+    try {
+      const response = await api.post("/cart/buy-now");
+
+      if (response.status === 200) {
+        console.log("Purchase successful");
+        // You may want to redirect the user to a confirmation page or perform other actions
+      } else {
+        console.error("Failed to complete the purchase");
+      }
+    } catch (error) {
+      console.error("Error during purchase:", error);
+    }
+  };
+
+  const moveToWishlist = async (productId) => {
+    try {
+      const response = await api.post("/wishlist/add-to-wishlist", {
+        product_id: productId,
+      });
+
+      if (response.status === 200) {
+        console.log("Item moved to wishlist successfully");
+        await fetchCartData(); // Refresh cart data
+      } else {
+        console.error("Failed to move item to wishlist");
+      }
+    } catch (error) {
+      console.error("Error moving item to wishlist:", error);
+    }
+  };
+
+  // Calculate total price
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
   return (
     <Layout>
       <div className="addtocart">
@@ -77,7 +115,7 @@ function AddtoCart() {
               className="cart-img"
             />
             <p>{item.title}</p>
-            <p>Price: ${item.price}</p>
+            <p>Price: ${item.price * item.quantity}</p>
 
             {/* Quantity update section */}
             <div
@@ -108,8 +146,35 @@ function AddtoCart() {
               className="delete-icon-btn">
               <FontAwesomeIcon icon={faTrash} />
             </div>
+
+            {/* Buy Now and Move to Wishlist buttons */}
+            <div style={{ marginTop: "10px" }}>
+              <button
+                onClick={() => {
+                  // Add logic to handle "Buy Now" for this item
+                  console.log("Buy Now clicked for item:", item);
+                }}
+                className="buy-now-btn">
+                Buy Now
+              </button>
+              <button
+                onClick={() => {
+                  moveToWishlist(item["_id"]);
+                }}
+                className="wishlist-btn">
+                Move to Wishlist
+              </button>
+            </div>
           </div>
         ))}
+        
+        {/* Total Price */}
+        <p className="total-price">Total Price: ${totalPrice}</p>
+
+        {/* Buy Now button */}
+        <button onClick={handleBuyNow} className="buy-now-btn">
+          Buy Now
+        </button>
       </div>
     </Layout>
   );
