@@ -81,13 +81,25 @@ function AddtoCart() {
 
   const moveToWishlist = async (productId) => {
     try {
-      const response = await api.post("/wishlist/add-to-wishlist", {
+      // Add to wishlist
+      const addToWishlistResponse = await api.post("/wishlist/add-to-wishlist", {
         product_id: productId,
       });
 
-      if (response.status === 200) {
+      if (addToWishlistResponse.status === 200) {
         console.log("Item moved to wishlist successfully");
-        await fetchCartData(); // Refresh cart data
+
+        // Remove from cart
+        const deleteFromCartResponse = await api.delete("/cart/delete-item-from-cart", {
+          data: { product_id: productId },
+        });
+
+        if (deleteFromCartResponse.status === 200) {
+          console.log("Item deleted from the cart");
+          await fetchCartData(); // Refresh cart data
+        } else {
+          console.error("Failed to delete item from the cart");
+        }
       } else {
         console.error("Failed to move item to wishlist");
       }
