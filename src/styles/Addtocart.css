@@ -12,6 +12,7 @@
     display: block;
     align-items: center;
     border-radius: 5px;
+    box-shadow: #404040;
   }
   
   .cart-img {
