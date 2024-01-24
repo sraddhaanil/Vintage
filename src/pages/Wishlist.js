@@ -44,6 +44,26 @@ function Wishlist() {
     }
   };
 
+  const moveToCart = async (productId) => {
+    try {
+      // Add to cart
+      const addToCartResponse = await api.post('/cart/add-to-cart', {
+        product_id: productId,
+      });
+
+      if (addToCartResponse.status === 200) {
+        console.log('Item moved to cart successfully');
+
+        // Delete from wishlist after adding to cart
+        await deleteFromWishlist(productId);
+      } else {
+        console.error('Failed to move item to cart');
+      }
+    } catch (error) {
+      console.error('Error moving item to cart:', error);
+    }
+  };
+
   return (
     <Layout>
       <div className="addtowishlist">
@@ -57,9 +77,14 @@ function Wishlist() {
             />
             <p>{item.title}</p>
             {/* Add more details if needed */}
-            <button  className="wish-list-btn" onClick={() => deleteFromWishlist(item["_id"])}>
+            <div>
+            <button className="wish-list-btn" onClick={() => moveToCart(item["_id"])}>
+              Move to Cart
+            </button>
+            <button className="wish-list-btn" onClick={() => deleteFromWishlist(item["_id"])}>
               Remove from Wishlist
             </button>
+          </div>
           </div>
         ))}
       </div>
@@ -68,3 +93,4 @@ function Wishlist() {
 }
 
 export default Wishlist;
+

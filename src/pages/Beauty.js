@@ -10,7 +10,7 @@ const api = axios.create({
   baseURL: "https://vintage-backend.onrender.com/api",
 });
 
-const Kids = () => {
+const Beauty = () => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [, setWishlist] = useState([]);
@@ -142,4 +142,5 @@ const Kids = () => {
   );
 };
 
-export default Kids;
+export default Beauty;
+
