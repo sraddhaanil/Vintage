@@ -22,6 +22,7 @@ const Women = () => {
         "/products/get-category-products?category=women"
       );
       const data = await response.data;
+      console.log(data);
       setProducts(data.slice(0, 20));
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -30,9 +31,9 @@ const Women = () => {
 
   const fetchCartData = async () => {
     try {
-      const response = await api.get("/cart/get-cart");
+      const response = await api.get("/cart/get-cart-items");
       const data = await response.data;
-      setCartItems(data.cart_items);
+      setCartItems(data);
     } catch (error) {
       console.error("Error fetching cart data:", error);
     }
@@ -42,7 +43,7 @@ const Women = () => {
     try {
       const response = await api.get("/wishlist/get-wishlist");
       const data = await response.data;
-      setWishlist(data.wishlist_items);
+      setWishlist(data);
     } catch (error) {
       console.error("Error fetching wishlist data:", error);
     }
@@ -55,16 +56,18 @@ const Women = () => {
   }, []);
 
   const isItemInCart = (productId) => {
-    return cartItems.some((item) => item.product_id === productId);
+    return cartItems.some((item) => item["_id"] === productId);
   };
 
   const addToCart = async (productId) => {
+    console.log(typeof productId);
+
     try {
       const response = await api.post("/cart/add-to-cart", {
         product_id: productId,
       });
-
-      if (response.data.success) {
+      console.log(response);
+      if (response.status === 200) {
         console.log("Item added to the cart");
         fetchCartData(); // Refresh cart data
       } else {
@@ -75,14 +78,13 @@ const Women = () => {
     }
   };
 
-  
   const addToWishlist = async (productId) => {
     try {
       const response = await api.post("/wishlist/add-to-wishlist", {
         product_id: productId,
       });
 
-      if (response.data.success) {
+      if (response.status === 200) {
         console.log("Item added to the wishlist");
         fetchWishlistData(); // Refresh wishlist data
       } else {
@@ -106,31 +108,26 @@ const Women = () => {
             </div>
             <div
               className="button-container text-center"
-              style={{ paddingTop: "15px" }}
-            >
-              {isItemInCart(product.id) ? (
+              style={{ paddingTop: "15px" }}>
+              {isItemInCart(product["_id"]) ? (
                 <button
                   className="btn btn-dark btn-lg"
-                  onClick={() => navigate("/cart")}
-                >
+                  onClick={() => navigate("/cart")}>
                   Go to Cart
                 </button>
               ) : (
                 <button
                   className="btn btn-dark btn-lg"
-                  onClick={() => addToCart(product.id)}
-                >
+                  onClick={() => addToCart(product["_id"])}>
                   Add to Cart
                 </button>
               )}
               <button
                 className="btn btn-outline-dark btn-lg"
                 style={{ marginLeft: "10px" }}
-                onClick={() => addToWishlist(product.id)}
->
-  <FontAwesomeIcon icon={faHeart} />
-</button>
-
+                onClick={() => addToWishlist(product["_id"])}>
+                <FontAwesomeIcon icon={faHeart} />
+              </button>
             </div>
           </div>
         ))}
@@ -140,5 +137,3 @@ const Women = () => {
 };
 
 export default Women;
-
-             

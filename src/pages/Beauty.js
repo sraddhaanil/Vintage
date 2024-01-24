@@ -22,6 +22,7 @@ const Beauty = () => {
         "/products/get-category-products?category=beauty"
       );
       const data = await response.data;
+      console.log(data);
       setProducts(data.slice(0, 20));
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -30,9 +31,9 @@ const Beauty = () => {
 
   const fetchCartData = async () => {
     try {
-      const response = await api.get("/cart/get-cart");
+      const response = await api.get("/cart/get-cart-items");
       const data = await response.data;
-      setCartItems(data.cart_items);
+      setCartItems(data);
     } catch (error) {
       console.error("Error fetching cart data:", error);
     }
@@ -42,20 +43,14 @@ const Beauty = () => {
     try {
       const response = await api.get("/wishlist/get-wishlist");
       const data = await response.data;
-      setWishlist(data.wishlist_items);
+      setWishlist(data);
     } catch (error) {
       console.error("Error fetching wishlist data:", error);
     }
   };
 
-  useEffect(() => {
-    getProducts();
-    fetchCartData();
-    fetchWishlistData();
-  }, []);
-
   const isItemInCart = (productId) => {
-    return cartItems.some((item) => item.product_id === productId);
+    return cartItems.some((item) => item["_id"] === productId);
   };
 
   const addToCart = async (productId) => {
@@ -63,8 +58,7 @@ const Beauty = () => {
       const response = await api.post("/cart/add-to-cart", {
         product_id: productId,
       });
-
-      if (response.data.success) {
+      if (response.status === 200) {
         console.log("Item added to the cart");
         fetchCartData(); // Refresh cart data
       } else {
@@ -75,21 +69,20 @@ const Beauty = () => {
     }
   };
 
-  const updateQuantity = async (productId, quantity) => {
+  const deleteFromCart = async (productId) => {
     try {
-      const response = await api.put("/cart/update-quantity", {
-        product_id: productId,
-        quantity: quantity,
+      const response = await api.delete("/cart/delete-item-from-cart", {
+        data: { product_id: productId },
       });
 
-      if (response.data.success) {
-        console.log("Quantity updated successfully");
+      if (response.status === 200) {
+        console.log("Item deleted from the cart");
         fetchCartData(); // Refresh cart data
       } else {
-        console.error("Failed to update quantity");
+        console.error("Failed to delete item from the cart");
       }
     } catch (error) {
-      console.error("Error updating quantity:", error);
+      console.error("Error deleting item from the cart:", error);
     }
   };
 
@@ -99,7 +92,7 @@ const Beauty = () => {
         product_id: productId,
       });
 
-      if (response.data.success) {
+      if (response.status === 200) {
         console.log("Item added to the wishlist");
         fetchWishlistData(); // Refresh wishlist data
       } else {
@@ -109,6 +102,29 @@ const Beauty = () => {
       console.error("Error adding item to the wishlist:", error);
     }
   };
+
+  const deleteFromWishlist = async (productId) => {
+    try {
+      const response = await api.delete("/wishlist/delete-item-from-wishlist", {
+        data: { product_id: productId },
+      });
+
+      if (response.status === 200) {
+        console.log("Item deleted from the wishlist");
+        fetchWishlistData(); // Refresh wishlist data
+      } else {
+        console.error("Failed to delete item from the wishlist");
+      }
+    } catch (error) {
+      console.error("Error deleting item from the wishlist:", error);
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+    fetchCartData();
+    fetchWishlistData();
+  }, []);
 
   return (
     <Layout className="beauty">
@@ -125,31 +141,25 @@ const Beauty = () => {
               className="button-container text-center"
               style={{ paddingTop: "15px" }}
             >
-              {isItemInCart(product.id) ? (
+              {isItemInCart(product["_id"]) ? (
                 <>
+                  <button
+                    className="btn btn-dark btn-lg"
+                    onClick={() => deleteFromCart(product["_id"])}
+                  >
+                    Delete from Cart
+                  </button>
                   <button
                     className="btn btn-dark btn-lg"
                     onClick={() => navigate("/cart")}
                   >
                     Go to Cart
                   </button>
-                  <input
-                    type="number"
-                    min="1"
-                    defaultValue="1"
-                    style={{ marginLeft: "10px", width: "60px" }}
-                    onChange={(e) => {
-                      const newQuantity = parseInt(e.target.value, 10);
-                      if (!isNaN(newQuantity)) {
-                        updateQuantity(product.id, newQuantity);
-                      }
-                    }}
-                  />
                 </>
               ) : (
                 <button
                   className="btn btn-dark btn-lg"
-                  onClick={() => addToCart(product.id)}
+                  onClick={() => addToCart(product["_id"])}
                 >
                   Add to Cart
                 </button>
@@ -157,7 +167,14 @@ const Beauty = () => {
               <button
                 className="btn btn-outline-dark btn-lg"
                 style={{ marginLeft: "10px" }}
-                onClick={() => addToWishlist(product.id)}
+                onClick={() => deleteFromWishlist(product["_id"])}
+              >
+                Remove from Wishlist
+              </button>
+              <button
+                className="btn btn-outline-dark btn-lg"
+                style={{ marginLeft: "10px" }}
+                onClick={() => addToWishlist(product["_id"])}
               >
                 <FontAwesomeIcon icon={faHeart} />
               </button>
@@ -170,3 +187,4 @@ const Beauty = () => {
 };
 
 export default Beauty;
+
