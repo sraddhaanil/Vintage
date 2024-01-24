@@ -120,6 +120,7 @@ function AddtoCart() {
         <h2>Your Cart</h2>
         {cartItems.map((item) => (
           <div key={item.id} className="cart-items">
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
             <img
               src={item.image}
               alt={item.title}
@@ -127,7 +128,7 @@ function AddtoCart() {
               className="cart-img"
             />
             <p>{item.title}</p>
-            <p>Price: ₹{item.price * item.quantity}</p>
+            <p>₹{item.price * item.quantity}</p>
 
             {/* Quantity update section */}
             <div
@@ -157,6 +158,7 @@ function AddtoCart() {
               }}
               className="delete-icon-btn">
               <FontAwesomeIcon icon={faTrash} />
+            </div>
             </div>
 
             {/* Buy Now and Move to Wishlist buttons */}

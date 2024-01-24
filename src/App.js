@@ -12,7 +12,7 @@ import Addtocart from "./pages/AddToCart";
 
 function App() {
   return (
-    <div>
+    <div className="App">
       <BrowserRouter>
       
         <Routes>
