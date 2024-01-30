@@ -108,7 +108,7 @@
 // export default Header;
 
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // Import Axios
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -124,6 +124,9 @@ function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   // eslint-disable-next-line
   const [searchResults, setSearchResults] = useState([]);
+
+  const navigate = useNavigate()
+
 
   const handleSearchChange = async (e) => {
     const query = e.target.value;
@@ -204,12 +207,12 @@ function Header() {
                 />
               </form>
               <div className="icons-container">
-                <Link to="/profile">
+              {!localStorage.getItem("currentUser") &&<Link to="/profile">
                   <FontAwesomeIcon
                     icon={faUser}
                     style={{ color: "white", marginLeft: "10px", cursor: "pointer" }}
                   />
-                </Link>
+                </Link>}
 
                 <Link to="/wishlist">
                   <FontAwesomeIcon
@@ -224,6 +227,13 @@ function Header() {
                     style={{ color: "white", marginLeft: "10px", cursor: "pointer" }}
                   />
                 </Link>
+                {localStorage.getItem("currentUser") &&<button className="mx-3 btn btn-danger"  onClick={()=>{
+                  localStorage.removeItem("currentUser")
+                  setTimeout(()=>{
+                    navigate("/profile")
+
+                  },2000)
+                }}>Logout</button>}
               </div>
             </div>
           </div>

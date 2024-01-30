@@ -14,7 +14,12 @@ function AddtoCart() {
 
   const fetchCartData = async () => {
     try {
-      const response = await api.get("/cart/get-cart-items");
+      const encodedData = btoa(localStorage.getItem("currentUser"))
+      const response = await api.get("/cart/get-cart-items",{
+        headers: {
+          "Authorization": `Basic ${encodedData}`
+        }
+        });
       const data = await response.data;
       setCartItems(data); // Assuming the API response contains cart items
     } catch (error) {
@@ -32,6 +37,7 @@ function AddtoCart() {
 
     try {
       const response = await api.put("/cart/update-quantity", {
+        user:localStorage.getItem("currentUser"),
         product_id: productId,
         quantity: newQuantity,
       });
@@ -50,7 +56,10 @@ function AddtoCart() {
   const deleteFromCart = async (productId) => {
     try {
       const response = await api.delete("/cart/delete-item-from-cart", {
-        data: { product_id: productId },
+        data: { 
+          user:localStorage.getItem("currentUser"),
+          product_id: productId 
+        },
       });
 
       if (response.status === 200) {
@@ -83,6 +92,7 @@ function AddtoCart() {
     try {
       // Add to wishlist
       const addToWishlistResponse = await api.post("/wishlist/add-to-wishlist", {
+        user:localStorage.getItem("currentUser"),
         product_id: productId,
       });
 
@@ -91,7 +101,9 @@ function AddtoCart() {
 
         // Remove from cart
         const deleteFromCartResponse = await api.delete("/cart/delete-item-from-cart", {
-          data: { product_id: productId },
+          data: { 
+            user:localStorage.getItem("currentUser"),
+            product_id: productId },
         });
 
         if (deleteFromCartResponse.status === 200) {
@@ -114,11 +126,7 @@ function AddtoCart() {
     0
   );
 
-  return (
-    <Layout>
-      <div className="addtocart">
-        <h2>Your Cart</h2>
-        {cartItems.map((item) => (
+  const codeLoggedIn = cartItems.map((item) => (
           <div key={item.id} className="cart-items">
             <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
             <img
@@ -180,15 +188,25 @@ function AddtoCart() {
               </button>
             </div>
           </div>
-        ))}
+        ))
+    
+    
+  
+
+  return (
+    <Layout>
+      <div className="addtocart">
+        <h2>Your Cart</h2>
+        
+        {localStorage.getItem("currentUser") ? <>{codeLoggedIn}</> : <h5>Login to add items to cart</h5>}
         
         {/* Total Price */}
-        <p className="total-price">Total Price: ₹{totalPrice}</p>
+        {totalPrice ? <p className="total-price">Total Price: ₹{totalPrice}</p>:""}
 
         {/* Buy Now button */}
-        <button onClick={handleBuyNow} className="buy-now-btn">
-          Buy Now
-        </button>
+        {totalPrice ? <button onClick={handleBuyNow} className="buy-now-btn">
+        Buy Now
+      </button>:""}
       </div>
     </Layout>
   );

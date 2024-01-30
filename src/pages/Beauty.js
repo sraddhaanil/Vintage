@@ -31,7 +31,12 @@ const Beauty = () => {
 
   const fetchCartData = async () => {
     try {
-      const response = await api.get("/cart/get-cart-items");
+      const encodedData = btoa(localStorage.getItem("currentUser"))
+      const response = await api.get("/cart/get-cart-items",{
+        headers: {
+          "Authorization": `Basic ${encodedData}`
+        }
+        });
       const data = await response.data;
       setCartItems(data);
     } catch (error) {
@@ -41,7 +46,12 @@ const Beauty = () => {
 
   const fetchWishlistData = async () => {
     try {
-      const response = await api.get("/wishlist/get-wishlist");
+      const encodedData = btoa(localStorage.getItem("currentUser"))
+      const response = await api.get("/wishlist/get-wishlist",{
+        headers: {
+          "Authorization": `Basic ${encodedData}`
+        }
+        });
       const data = await response.data;
       setWishlist(data);
     } catch (error) {
@@ -55,6 +65,8 @@ const Beauty = () => {
     fetchWishlistData();
   }, []);
 
+  
+
   const isItemInCart = (productId) => {
     return cartItems.some((item) => item["_id"] === productId);
   };
@@ -64,6 +76,7 @@ const Beauty = () => {
 
     try {
       const response = await api.post("/cart/add-to-cart", {
+        user:localStorage.getItem("currentUser"),
         product_id: productId,
       });
       console.log(response)
@@ -82,6 +95,7 @@ const Beauty = () => {
   const addToWishlist = async (productId) => {
     try {
       const response = await api.post("/wishlist/add-to-wishlist", {
+        user:localStorage.getItem("currentUser"),
         product_id: productId,
       });
 
