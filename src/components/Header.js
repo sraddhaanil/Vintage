@@ -128,7 +128,7 @@ import "../styles/Header.css"; // Import your Header component styles
 // Define the Header functional component
 function Header() {
   // State to manage the search query and search results
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(localStorage.getItem("search-item"));
   const [searchResults, setSearchResults] = useState([]);
 
   const navigate = useNavigate()
@@ -138,18 +138,11 @@ function Header() {
   const handleSearchChange = async (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-
-    try {
-      // Make an API request with the search query
-      const response = await axios.get(
-        `https://vintage-backend.onrender.com/api/products/search-item?product=${query}`
-      );
-
-      // Update the search results in the state
-      setSearchResults(response.data);
-    } catch (error) {
-      console.error("Error fetching search results:", error);
-    }
+    localStorage.setItem("search-item",e.target.value)
+    setTimeout(()=>{
+      navigate("/search")
+    },2000)
+    
   };
 
   // Simple useEffect to address the 'useEffect is defined but never used' warning
@@ -221,7 +214,7 @@ function Header() {
                 />
 
                 {/* Conditional rendering of search results */}
-                {searchResults.length > 0 && (
+                {/* {searchResults.length > 0 && (
                   <div className="search-results-container">
                     {searchResults.map((result) => (
                       <Link
@@ -233,7 +226,7 @@ function Header() {
                       </Link>
                     ))}
                   </div>
-                )}
+                )} */}
               </form>
 
               {/* Icons container */}

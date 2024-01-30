@@ -9,6 +9,7 @@ import Kids from "./pages/Kids";
 import Beauty from "./pages/Beauty";
 import Wishlist from "./pages/Wishlist";
 import AddToCart from './pages/AddToCart';
+import Search from "./pages/Search";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/profile" element={<Profile />}/>
         <Route path="/wishlist" element={<Wishlist />}/>
         <Route path="/cart" element={<AddToCart />}/>
+        <Route path="/search" element={<Search />}/>
         
         </Routes>
       </BrowserRouter>
