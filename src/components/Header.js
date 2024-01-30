@@ -110,6 +110,7 @@
 
 
 
+
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -214,26 +215,38 @@ function Header() {
                 )}
               </form>
               <div className="icons-container">
-              <Link to="/profile">
-                                <FontAwesomeIcon
-                                  icon={faUser}
-                                  style={{ color: "white", marginLeft: "10px", cursor: "pointer" }}
-                                />
-                              </Link>
-              
-                              <Link to="/wishlist">
-                                <FontAwesomeIcon
-                                  icon={faHeart}
-                                  style={{ color: "white", marginLeft: "10px", cursor: "pointer" }}
-                                />
-                              </Link>
-              
-                              <Link to="/cart">
-                                <FontAwesomeIcon
-                                  icon={faShoppingBag}
-                                  style={{ color: "white", marginLeft: "10px", cursor: "pointer" }}
-                                />
-                              </Link>
+                <Link to="/profile">
+                  <FontAwesomeIcon
+                    icon={faUser}
+                    style={{
+                      color: "white",
+                      marginLeft: "10px",
+                      cursor: "pointer",
+                    }}
+                  />
+                </Link>
+
+                <Link to="/wishlist">
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    style={{
+                      color: "white",
+                      marginLeft: "10px",
+                      cursor: "pointer",
+                    }}
+                  />
+                </Link>
+
+                <Link to="/cart">
+                  <FontAwesomeIcon
+                    icon={faShoppingBag}
+                    style={{
+                      color: "white",
+                      marginLeft: "10px",
+                      cursor: "pointer",
+                    }}
+                  />
+                </Link>
               </div>
             </div>
           </div>
@@ -244,4 +257,3 @@ function Header() {
 }
 
 export default Header;
-

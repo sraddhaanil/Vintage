@@ -7,6 +7,7 @@ import kidImage from '../images/kids.jpg';
 import beautyImage from '../images/beauty.jpg';
 
 function Home() {
+ 
   return (
     <Layout>
       <div className="home-page">

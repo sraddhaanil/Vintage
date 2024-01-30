@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import "../styles/Profile.css"
 import Layout from '../components/Layout';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+
+const api = axios.create({
+  baseURL: 'https://vintage-backend.onrender.com/api',
+});
 
 const Profile = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -26,10 +33,35 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const navigate = useNavigate()
+
+  const sendLoginCredentials = async()=>{
+    try{
+      const encodedData = btoa(email+":"+password)
+      const response = await api.get("/users/user-login",{
+        headers: {
+          "Authorization": `Basic ${encodedData}`
+        }
+        })
+      const data = await response.data
+      localStorage.setItem("currentUser",data.currentUser)
+      console.log("data",data)
+    }
+    catch(error)
+    {
+      console.error('Failed to login', error);
+    }
+  } 
+
   const handleLogin = (e) => {
     e.preventDefault();
     // Add logic for handling login (e.g., API call)
     console.log('Logging in with:', { email, password });
+    sendLoginCredentials()
+    setTimeout(()=>{
+      navigate("/")
+    },2000)
+    
   };
 
   return (
@@ -59,11 +91,33 @@ const LoginForm = () => {
   );
 };
 
+
+
 const SignUpForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMatchError, setPasswordMatchError] = useState(false);
+
+  const navigate = useNavigate()
+
+
+  const sendSignUpCredentials = async()=>{
+    try{
+      
+      const response = await api.post("/users/create-user",{
+        email,
+        password
+      })
+      const data = await response.data
+      localStorage.setItem("currentUser",data.currentUser)
+      console.log("data",data)
+    }
+    catch(error)
+    {
+      console.error('Failed to login', error);
+    }
+  } 
 
   const handleSignUp = (e) => {
     e.preventDefault();
@@ -83,6 +137,10 @@ const SignUpForm = () => {
 
     // Add logic for handling sign-up (e.g., API call)
     console.log('Signing up with:', { email, password, confirmPassword });
+    sendSignUpCredentials()
+    setTimeout(()=>{
+      navigate("/")
+    },2000)
   };
 
   return (

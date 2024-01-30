@@ -10,20 +10,22 @@ import Beauty from "./pages/Beauty";
 import Wishlist from "./pages/Wishlist";
 import AddToCart from './pages/AddToCart';
 
+
 function App() {
+
   return (
     <div className="App">
       <BrowserRouter>
       
         <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/men" element={<Men/>}/>
-        <Route path="/women" element={<Women/>}/>
-        <Route path="/Kids" element={<Kids/>}/>
-        <Route path="/beauty" element={<Beauty/>}/>
-        <Route path="/profile" element={<Profile/>}/>
-        <Route path="/wishlist" element={<Wishlist/>}/>
-        <Route path="/cart" element={<AddToCart/>}/>
+        <Route path="/" element={<Home />}/>
+        <Route path="/men" element={<Men />}/>
+        <Route path="/women" element={<Women />}/>
+        <Route path="/Kids" element={<Kids />}/>
+        <Route path="/beauty" element={<Beauty />}/>
+        <Route path="/profile" element={<Profile />}/>
+        <Route path="/wishlist" element={<Wishlist />}/>
+        <Route path="/cart" element={<AddToCart />}/>
         
         </Routes>
       </BrowserRouter>

@@ -13,7 +13,12 @@ function Wishlist() {
   // Move fetchWishlistData outside useEffect
   const fetchWishlistData = async () => {
     try {
-      const response = await api.get('/wishlist/get-wishlist-items');
+      const encodedData = btoa(localStorage.getItem("currentUser"))
+      const response = await api.get('/wishlist/get-wishlist-items',{
+        headers: {
+          "Authorization": `Basic ${encodedData}`
+        }
+        });
       const data = await response.data;
       setWishlist(data); // Assuming the API response contains wishlist items
     } catch (error) {
@@ -29,7 +34,9 @@ function Wishlist() {
   const deleteFromWishlist = async (productId) => {
     try {
       const response = await api.delete('/wishlist/delete-item-from-wishlist', {
-        data: { product_id: productId },
+        data: { 
+          user:localStorage.getItem("currentUser"),
+          product_id: productId },
       });
 
       if (response.status === 200) {
@@ -48,6 +55,7 @@ function Wishlist() {
     try {
       // Add to cart
       const addToCartResponse = await api.post('/cart/add-to-cart', {
+        user:localStorage.getItem("currentUser"),
         product_id: productId,
       });
 
@@ -64,11 +72,7 @@ function Wishlist() {
     }
   };
 
-  return (
-    <Layout>
-      <div className="addtowishlist">
-        <h2>Your Wishlist</h2>
-        {wishlist.map((item) => (
+  const codeLoggedIn = wishlist.map((item) => (
           <div key={item.id} className="wish-list-items">
             <img
               src={item.image}
@@ -86,7 +90,13 @@ function Wishlist() {
             </button>
           </div>
           </div>
-        ))}
+        ))
+
+  return (
+    <Layout>
+      <div className="addtowishlist">
+        <h2>Your Wishlist</h2>
+        {localStorage.getItem("currentUser") ? codeLoggedIn : <h5>Login to add items to wishlist</h5>}
       </div>
     </Layout>
   );
