@@ -112,32 +112,34 @@
 
 
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Link } from "react-router-dom";
+import axios from "axios"; // Import Axios
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faUser, faHeart, faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import logoImage from "../images/logo.png";
 import "../styles/Header.css";
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
-  const navigate = useNavigate();
+  // State to manage the search query and search results
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+
+  const navigate = useNavigate()
+
 
   const handleSearchChange = async (e) => {
     const query = e.target.value;
     setSearchQuery(query);
 
     try {
+      // Make an API request with the search query
       const response = await axios.get(
         `https://vintage-backend.onrender.com/api/products/search-item?product=${query}`
       );
 
+      // Update the search results in the state
       setSearchResults(response.data);
-
-      if (response.data.length > 0) {
-        navigate(`/search/${query}`);
-      }
     } catch (error) {
       console.error("Error fetching search results:", error);
     }
@@ -200,6 +202,8 @@ function Header() {
                   onChange={handleSearchChange}
                   style={{ width: "400px" }}
                 />
+
+                {/* Conditional rendering of search results */}
                 {searchResults.length > 0 && (
                   <div className="search-results-container">
                     {searchResults.map((result) => (
@@ -212,10 +216,10 @@ function Header() {
                       </Link>
                     ))}
                   </div>
-                )}
+                )} 
               </form>
               <div className="icons-container">
-                <Link to="/profile">
+              {!localStorage.getItem("currentUser") &&<Link to="/profile">
                   <FontAwesomeIcon
                     icon={faUser}
                     style={{
@@ -224,7 +228,7 @@ function Header() {
                       cursor: "pointer",
                     }}
                   />
-                </Link>
+                </Link>}
 
                 <Link to="/wishlist">
                   <FontAwesomeIcon
@@ -247,6 +251,13 @@ function Header() {
                     }}
                   />
                 </Link>
+                {localStorage.getItem("currentUser") &&<button className="mx-3 btn btn-light"  onClick={()=>{
+                  localStorage.removeItem("currentUser")
+                  setTimeout(()=>{
+                    navigate("/profile")
+
+                  },2000)
+                }}>Logout</button>}
               </div>
             </div>
           </div>
