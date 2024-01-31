@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios"; // Import Axios
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
@@ -14,26 +13,18 @@ import { useNavigate } from "react-router-dom";
 
 function Header() {
   // State to manage the search query and search results
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(localStorage.getItem("search-item").length?localStorage.getItem("search-item"):"");
 
   const navigate = useNavigate();
 
   const handleSearchChange = async (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
+    setSearchQuery(e.target.value)
+    localStorage.setItem("search-item",e.target.value)
+    setTimeout(()=>{
+      navigate("/search")
 
-    try {
-      // Make an API request with the search query
-      const response = await axios.get(
-        `https://vintage-backend.onrender.com/api/products/search-item?product=${query}`
-      );
+    },1500)
 
-      // Update the search results in the state
-      setSearchResults(response.data);
-    } catch (error) {
-      console.error("Error fetching search results:", error);
-    }
   };
 
   useEffect(() => {
@@ -93,19 +84,7 @@ function Header() {
                   style={{ width: "400px" }}
                 />
 
-                {/* Conditional rendering of search results */}
-                {searchResults.length > 0 && (
-                  <div className="search-results-container">
-                    {searchResults.map((result) => (
-                      <Link
-                        key={result.id}
-                        to={`/search/${searchQuery}`}
-                        className="search-result">
-                        {result.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
+                
                 
               </form>
               <div className="icons-container">
