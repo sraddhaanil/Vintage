@@ -122,6 +122,26 @@ const Kids = () => {
     }
   };
 
+  const deleteFromWishlist = async (productId) => {
+    try {
+      const response = await api.delete('/wishlist/delete-item-from-wishlist', {
+        data: { 
+          user:localStorage.getItem("currentUser"),
+          product_id: productId },
+      });
+
+      if (response.status === 200) {
+        console.log('Item deleted from the wishlist');
+        // Refresh wishlist data after deletion
+        fetchWishlistData();
+      } else {
+        console.error('Failed to delete item from the wishlist');
+      }
+    } catch (error) {
+      console.error('Error deleting item from the wishlist:', error);
+    }
+  };
+
   return (
     <Layout className="kids">
       <div className="card-content row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center">
@@ -156,6 +176,8 @@ const Kids = () => {
                 className="btn btn-outline-dark btn-lg"
                 style={{ marginLeft: "10px", color: isItemInWishlist(product["_id"]) ? 'red' : 'black' }}
                 onClick={() => addToWishlist(product["_id"])}
+                onDoubleClick={()=>deleteFromWishlist(product["_id"])}
+
               >
                 <FontAwesomeIcon icon={faHeart} />
               </button>

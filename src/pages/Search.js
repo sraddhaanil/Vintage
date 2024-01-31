@@ -11,7 +11,7 @@ const api = axios.create({
 function Search() {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  const [, setWishlist] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
   const navigate = useNavigate();
 
 
@@ -70,6 +70,10 @@ function Search() {
     return cartItems.some((item) => item["_id"] === productId);
   };
 
+  const isItemInWishlist = (productId) => {
+    return wishlist.some((item) => item["_id"] === productId);
+  };
+
   const addToCart = async (productId) => {
     console.log(typeof productId);
 
@@ -108,6 +112,26 @@ function Search() {
     }
   };
 
+  const deleteFromWishlist = async (productId) => {
+    try {
+      const response = await api.delete('/wishlist/delete-item-from-wishlist', {
+        data: { 
+          user:localStorage.getItem("currentUser"),
+          product_id: productId },
+      });
+
+      if (response.status === 200) {
+        console.log('Item deleted from the wishlist');
+        // Refresh wishlist data after deletion
+        fetchWishlistData();
+      } else {
+        console.error('Failed to delete item from the wishlist');
+      }
+    } catch (error) {
+      console.error('Error deleting item from the wishlist:', error);
+    }
+  };
+
 
   return (
     <Layout className="kids">
@@ -141,11 +165,12 @@ function Search() {
               )}
               <button
                 className="btn btn-outline-dark btn-lg"
-                style={{ marginLeft: "10px" }}
+                style={{ marginLeft: "10px", color: isItemInWishlist(product["_id"]) ? 'red' : 'black' }}
                 onClick={() => addToWishlist(product["_id"])}
->
-  <FontAwesomeIcon icon={faHeart} />
-</button>
+                onDoubleClick={()=>deleteFromWishlist(product["_id"])}
+                >
+                <FontAwesomeIcon icon={faHeart} />
+              </button>
 
             </div>
           </div>
