@@ -31,6 +31,7 @@ const Profile = () => {
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage,setErrorMessage] = useState("")
 
   const navigate = useNavigate();
 
@@ -43,10 +44,23 @@ const LoginForm = () => {
         }
       });
       const data = await response.data;
-      localStorage.setItem("currentUser", data.currentUser);
-      console.log("data", data);
+      if(response.status === 200)
+      {
+        localStorage.setItem("currentUser", data.currentUser);
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      }
+      
     } catch (error) {
-      console.error('Failed to login', error);
+      if(error.response.status === 404)
+      {
+        setErrorMessage("User does not exist!")
+      }
+      else if(error.response.status === 401)
+      {
+        setErrorMessage("Incorrect password!")
+      }
     }
   };
 
@@ -54,9 +68,7 @@ const LoginForm = () => {
     e.preventDefault();
     console.log('Logging in with:', { email, password });
     sendLoginCredentials();
-    setTimeout(() => {
-      navigate("/");
-    }, 2000);
+    
   };
 
   return (
@@ -94,6 +106,8 @@ const LoginForm = () => {
           required
         />
       </label>
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+
       <br />
       <button type="submit">Log In</button>
     </form>
@@ -105,6 +119,7 @@ const SignUpForm = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordMatchError, setPasswordMatchError] = useState(false);
+  const [errorMessage,setErrorMessage] = useState("")
 
   const navigate = useNavigate();
 
@@ -115,10 +130,20 @@ const SignUpForm = () => {
         password
       });
       const data = await response.data;
-      localStorage.setItem("currentUser", data.currentUser);
-      console.log("data", data);
+      console.log(response.status)
+      if(response.status === 200)
+      {
+        localStorage.setItem("currentUser", data.currentUser);
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      }
+      
     } catch (error) {
-      console.error('Failed to sign up', error);
+      if(error.response.status === 409)
+      {
+        setErrorMessage("User already exists!")
+      }
     }
   };
 
@@ -138,9 +163,7 @@ const SignUpForm = () => {
 
     console.log('Signing up with:', { email, password, confirmPassword });
     sendSignUpCredentials();
-    setTimeout(() => {
-      navigate("/");
-    }, 2000);
+   
   };
 
   return (
@@ -196,6 +219,7 @@ const SignUpForm = () => {
         />
       </label>
       {passwordMatchError && <p style={{ color: 'red' }}>Passwords don't match!</p>}
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       <br />
       <button type="submit">Sign Up</button>
     </form>
