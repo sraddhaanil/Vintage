@@ -46,7 +46,7 @@ function Search() {
   const fetchWishlistData = async () => {
     try {
       const encodedData = btoa(localStorage.getItem("currentUser"))
-      const response = await api.get("/wishlist/get-wishlist",{
+      const response = await api.get("/wishlist/get-wishlist-items",{
         headers: {
           "Authorization": `Basic ${encodedData}`
         }
@@ -79,7 +79,7 @@ function Search() {
         product_id: productId,
       });
       console.log(response);
-      if (response.status === 200) {
+      if (response.status === 201) {
         console.log("Item added to the cart");
         fetchCartData(); // Refresh cart data
       } else {

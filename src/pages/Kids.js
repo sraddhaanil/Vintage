@@ -22,7 +22,6 @@ const Kids = () => {
         "/products/get-category-products?category=kids"
       );
       const data = await response.data;
-      console.log(data);
       setProducts(data.slice(0, 20));
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -47,7 +46,7 @@ const Kids = () => {
   const fetchWishlistData = async () => {
     try {
       const encodedData = btoa(localStorage.getItem("currentUser"));
-      const response = await api.get("/wishlist/get-wishlist", {
+      const response = await api.get("/wishlist/get-wishlist-items", {
         headers: {
           Authorization: `Basic ${encodedData}`,
         },
@@ -83,7 +82,7 @@ const Kids = () => {
         product_id: productId,
       });
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         console.log("Item added to the cart");
         fetchCartData(); // Refresh cart data
       } else {
