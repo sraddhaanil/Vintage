@@ -77,7 +77,7 @@ function Header() {
                 <input
                   className="form-control me-2 pl-4 search-input"
                   type="search"
-                  placeholder="Search for products, brands and more"
+                  placeholder="Search any products"
                   aria-label="Search"
                   value={searchQuery}
                   onChange={handleSearchChange}
@@ -121,6 +121,7 @@ function Header() {
                       cursor: "pointer",
                     }}
                   />
+                  
                 </Link>
                 {localStorage.getItem("currentUser") && (
                   <button
