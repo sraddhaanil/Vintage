@@ -19,7 +19,7 @@ function Search() {
   try {
     // Make an API request with the search query
     const response = await axios.get(
-      `https://vintage-backend.onrender.com/api/products/search-item?product=${localStorage.getItem('search-item')}`
+      `https://vintage-backend.onrender.com/api/products/search-item?product=${sessionStorage.getItem('search-item')}`
     );
 
     // Update the search results in the state

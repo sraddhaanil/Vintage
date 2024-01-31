@@ -13,13 +13,13 @@ import { useNavigate } from "react-router-dom";
 
 function Header() {
   // State to manage the search query and search results
-  const [searchQuery, setSearchQuery] = useState(localStorage.getItem("search-item").length?localStorage.getItem("search-item"):"");
+  const [searchQuery, setSearchQuery] = useState(sessionStorage.getItem("search-item")?sessionStorage.getItem("search-item"):"");
 
   const navigate = useNavigate();
 
   const handleSearchChange = async (e) => {
     setSearchQuery(e.target.value)
-    localStorage.setItem("search-item",e.target.value)
+    sessionStorage.setItem("search-item",e.target.value)
     setTimeout(()=>{
       navigate("/search")
 
