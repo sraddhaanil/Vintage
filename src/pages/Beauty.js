@@ -13,7 +13,7 @@ const api = axios.create({
 const Beauty = () => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  const [, setWishlist] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
   const navigate = useNavigate();
 
   async function getProducts() {
@@ -66,6 +66,10 @@ const Beauty = () => {
 
   const isItemInCart = (productId) => {
     return cartItems.some((item) => item["_id"] === productId);
+  };
+
+  const isItemInWishlist = (productId) => {
+    return wishlist.some((item) => item["_id"] === productId);
   };
 
   const addToCart = async (productId) => {
@@ -150,7 +154,7 @@ const Beauty = () => {
               )}
               <button
                 className="btn btn-outline-dark btn-lg"
-                style={{ marginLeft: "10px" }}
+                style={{ marginLeft: "10px", color: isItemInWishlist(product["_id"]) ? 'red' : 'black' }}
                 onClick={() => addToWishlist(product["_id"])}
               >
                 <FontAwesomeIcon icon={faHeart} />
