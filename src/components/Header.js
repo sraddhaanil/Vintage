@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
@@ -17,13 +17,23 @@ function Header() {
 
   const navigate = useNavigate();
 
+  const {pathname} = useLocation()
+
   const handleSearchChange = async (e) => {
     setSearchQuery(e.target.value)
     sessionStorage.setItem("search-item",e.target.value)
     setTimeout(()=>{
-      navigate("/search")
+      if(pathname === "/search")
+      {
+        window.location.reload()
+      }
+      else{
 
-    },1500)
+        navigate("/search")
+      }
+
+
+    },2500)
 
   };
 

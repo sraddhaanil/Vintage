@@ -12,6 +12,7 @@ function Search() {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [wishlist, setWishlist] = useState([]);
+  const [message,setMessage] = useState("")
   const navigate = useNavigate();
 
 
@@ -24,6 +25,7 @@ function Search() {
 
     // Update the search results in the state
     setProducts(response.data);
+    setMessage(!response.data.length ? `No search results for ${sessionStorage.getItem('search-item')}`:"")
   } catch (error) {
     console.error("Error fetching search results:", error);
   }}
@@ -136,6 +138,7 @@ function Search() {
   return (
     <Layout className="kids">
       <div className="card-content row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center">
+        {message.length &&<h3 className='h3'>{message}</h3>}
         {products.map((product) => (
           <div className="col card col-md-4 col-lg-3" key={product.id}>
             <img src={product.image} className="card-img-top" alt="..." />
